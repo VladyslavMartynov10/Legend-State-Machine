@@ -20,11 +20,20 @@ export const RootNavigator: React.FC = () => {
           component={ImplementationList}
         />
 
-        <Stack.Screen name="DECLATIVE_APPROACH" component={DeclativeApproach} />
+        <Stack.Screen
+          name="DECLATIVE_APPROACH"
+          component={DeclativeApproach}
+          options={{
+            headerTitle: 'React-Native',
+          }}
+        />
 
         <Stack.Screen
           name="LEGEND_STATE_MACHINE"
           component={LegendMachineApproach}
+          options={{
+            headerTitle: 'Legend State Machine',
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
