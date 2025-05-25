@@ -4,19 +4,24 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import {useDebugContext} from '../DebugContext';
 
 export const HighlightOnRender: React.FC<{children: React.ReactNode}> = ({
   children,
 }) => {
+  const {debugRenderHighlight} = useDebugContext();
   const borderColor = useSharedValue('transparent');
 
-  borderColor.value = withTiming('limegreen', {duration: 100}, () => {
-    borderColor.value = withTiming('transparent', {duration: 500});
-  });
+  if (debugRenderHighlight) {
+    borderColor.value = withTiming('limegreen', {duration: 100}, () => {
+      borderColor.value = withTiming('transparent', {duration: 500});
+    });
+  }
 
   const animatedStyle = useAnimatedStyle(() => ({
-    borderWidth: 1,
+    borderWidth: debugRenderHighlight ? 1 : 0,
     borderColor: borderColor.value,
+    borderRadius: 6,
   }));
 
   return <Animated.View style={animatedStyle}>{children}</Animated.View>;

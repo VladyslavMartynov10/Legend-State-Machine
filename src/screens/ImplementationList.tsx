@@ -1,6 +1,13 @@
 import React from 'react';
-import {ScrollView, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {Routes, RouteService} from '../navigation';
+import {useDebugContext} from '../DebugContext';
 
 const screens = [
   {
@@ -11,18 +18,26 @@ const screens = [
 ] as const;
 
 export const ImplementationList: React.FC = () => {
+  const {debugRenderHighlight, toggleDebug} = useDebugContext();
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {screens.map(({label, route}) => (
         <TouchableOpacity
           key={route}
           style={styles.card}
-          onPress={() => {
-            RouteService.navigate(route);
-          }}>
+          onPress={() => RouteService.navigate(route)}>
           <Text style={styles.label}>{label}</Text>
         </TouchableOpacity>
       ))}
+
+      <View style={styles.divider} />
+
+      <TouchableOpacity style={styles.debugButton} onPress={toggleDebug}>
+        <Text style={styles.debugText}>
+          {debugRenderHighlight ? 'Disable' : 'Enable'} Debug Mode
+        </Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -47,5 +62,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     color: '#111',
+  },
+  divider: {
+    marginVertical: 16,
+    height: 1,
+    backgroundColor: '#eee',
+  },
+  debugButton: {
+    padding: 16,
+    borderRadius: 8,
+    backgroundColor: '#f0f0f0',
+    alignItems: 'center',
+  },
+  debugText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#007AFF',
   },
 });

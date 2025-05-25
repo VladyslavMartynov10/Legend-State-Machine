@@ -1,33 +1,38 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {ActivityIndicator as Indicator} from 'react-native';
-import Modal from 'react-native-modal';
+import {Portal} from '@gorhom/portal';
+import {View, ActivityIndicator as BaseIndicator} from 'react-native';
+import {useStyles, createStyleSheet} from 'react-native-unistyles';
+import {AnimatedBackdrop} from './AnimatedBackDrop';
 
 interface ActivityIndicatorProps {
   isVisible: boolean;
-  color?: string;
 }
 
 export const ActivityIndicator: React.FC<ActivityIndicatorProps> = ({
   isVisible,
-  color,
-}) => (
-  <Modal
-    backdropOpacity={0.4}
-    backdropColor="#000"
-    isVisible={isVisible}
-    animationIn="fadeIn"
-    animationOut="fadeOut">
-    <View style={styles.container}>
-      <Indicator size="large" color={color} />
-    </View>
-  </Modal>
-);
+}) => {
+  const {styles} = useStyles(stylesheet);
 
-const styles = StyleSheet.create({
+  return (
+    <Portal>
+      <AnimatedBackdrop isVisible={isVisible} />
+
+      {isVisible && (
+        <View style={styles.container}>
+          <BaseIndicator size="large" color="black" />
+        </View>
+      )}
+    </Portal>
+  );
+};
+
+const stylesheet = createStyleSheet((_, runtime) => ({
   container: {
     flex: 1,
+    position: 'absolute',
+    alignSelf: 'center',
     justifyContent: 'center',
-    alignItems: 'center',
+    zIndex: 999,
+    top: runtime.screen.height / 2,
   },
-});
+}));
