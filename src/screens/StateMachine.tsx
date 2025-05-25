@@ -8,7 +8,11 @@ import {
   Platform,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-controller';
-import {AnimatedShadowButton, ActivityIndicator} from '../ui';
+import {
+  AnimatedShadowButton,
+  ActivityIndicator,
+  HighlightOnRender,
+} from '../ui';
 import {
   $Switch as Switch,
   $TextInput as TextInput,
@@ -30,100 +34,149 @@ export const StateMachine = () => {
       </Show>
 
       <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.title}>Create Account</Text>
+        <HighlightOnRender>
+          <Text style={styles.title}>Create Account</Text>
+        </HighlightOnRender>
 
-        <TextInput
-          $value={values.firstName}
-          placeholder="First Name"
-          $style={() =>
-            errors.firstName.get() ? styles.inputError : styles.input
-          }
-          placeholderTextColor="#666"
-        />
+        <HighlightOnRender>
+          <TextInput
+            $value={values.firstName}
+            placeholder="First Name"
+            $style={() =>
+              errors.firstName.get() ? styles.inputError : styles.input
+            }
+            placeholderTextColor="#666"
+          />
+        </HighlightOnRender>
 
-        <Show if={errors.firstName}>
-          {() => <Text style={styles.errorText}>{errors.firstName.get()}</Text>}
-        </Show>
+        <HighlightOnRender>
+          <Show if={errors.firstName}>
+            {() => (
+              <Text style={styles.errorText}>{errors.firstName.get()}</Text>
+            )}
+          </Show>
+        </HighlightOnRender>
 
-        <TextInput
-          $value={values.lastName}
-          placeholder="Last Name"
-          $style={() =>
-            errors.lastName.get() ? styles.inputError : styles.input
-          }
-          placeholderTextColor="#666"
-        />
+        <HighlightOnRender>
+          <TextInput
+            $value={values.lastName}
+            placeholder="Last Name"
+            $style={() =>
+              errors.lastName.get() ? styles.inputError : styles.input
+            }
+            placeholderTextColor="#666"
+          />
+        </HighlightOnRender>
 
-        <Show if={errors.lastName}>
-          {() => <Text style={styles.errorText}>{errors.lastName.get()}</Text>}
-        </Show>
+        <HighlightOnRender>
+          <Show if={errors.lastName}>
+            {() => (
+              <Text style={styles.errorText}>{errors.lastName.get()}</Text>
+            )}
+          </Show>
+        </HighlightOnRender>
 
-        <TextInput
-          $value={values.email}
-          placeholder="user@gmail.com"
-          $style={() => (errors.email.get() ? styles.inputError : styles.input)}
-          placeholderTextColor="#666"
-        />
+        <HighlightOnRender>
+          <TextInput
+            $value={values.email}
+            placeholder="user@gmail.com"
+            $style={() =>
+              errors.email.get() ? styles.inputError : styles.input
+            }
+            placeholderTextColor="#666"
+          />
+        </HighlightOnRender>
 
-        <Show if={errors.email}>
-          {() => <Text style={styles.errorText}>{errors.email.get()}</Text>}
-        </Show>
-        <TextInput
-          $value={values.password}
-          placeholder="Enter Your Password"
-          secureTextEntry
-          $style={() =>
-            errors.password.get() ? styles.inputError : styles.input
-          }
-          placeholderTextColor="#666"
-        />
-        <Show if={errors.password}>
-          {() => <Text style={styles.errorText}>{errors.password.get()}</Text>}
-        </Show>
+        <HighlightOnRender>
+          <Show if={errors.email}>
+            {() => <Text style={styles.errorText}>{errors.email.get()}</Text>}
+          </Show>
+        </HighlightOnRender>
+
+        <HighlightOnRender>
+          <TextInput
+            $value={values.password}
+            placeholder="Enter Your Password"
+            secureTextEntry
+            $style={() =>
+              errors.password.get() ? styles.inputError : styles.input
+            }
+            placeholderTextColor="#666"
+          />
+        </HighlightOnRender>
+
+        <HighlightOnRender>
+          <Show if={errors.password}>
+            {() => (
+              <Text style={styles.errorText}>{errors.password.get()}</Text>
+            )}
+          </Show>
+        </HighlightOnRender>
+
         <View style={styles.termsContainer}>
-          <Switch $value={values.agreeTerms} />
-          <Text style={styles.termsText}>
-            I agree with{' '}
-            <Text style={styles.linkText} onPress={stateMachine$.openPrivacy}>
-              Terms of Service
-            </Text>{' '}
-            and <Text style={styles.linkText}>{'\n'}Privacy Policy</Text>
-          </Text>
+          <HighlightOnRender>
+            <Switch $value={values.agreeTerms} />
+          </HighlightOnRender>
+
+          <HighlightOnRender>
+            <Text style={styles.termsText}>
+              I agree with{' '}
+              <Text style={styles.linkText} onPress={stateMachine$.openPrivacy}>
+                Terms of Service
+              </Text>{' '}
+              and <Text style={styles.linkText}>{'\n'}Privacy Policy</Text>
+            </Text>
+          </HighlightOnRender>
         </View>
-        <AnimatedShadowButton
-          title="Sign Up"
-          onPress={() => stateMachine$.send({type: 'SUBMIT'})}
-        />
-        <Text style={styles.orText}>or</Text>
-        <TouchableOpacity
-          style={styles.socialButtonLinkedin}
-          onPress={stateMachine$.signInWithLinkedIn}>
-          <Image
-            source={require('../../assets/linkedin.png')}
-            style={styles.socialIconWhite}
+
+        <HighlightOnRender>
+          <AnimatedShadowButton
+            title="Sign Up"
+            onPress={() => stateMachine$.send({type: 'SUBMIT'})}
           />
-          <Text style={styles.socialButtonTextWhite}>
-            Continue with LinkedIn
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.socialButton}
-          onPress={stateMachine$.signInWithGoogle}>
-          <Image
-            source={require('../../assets/google.png')}
-            style={styles.socialIcon}
-          />
-          <Text style={styles.socialButtonText}>Continue with Google</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.socialButton}
-          onPress={stateMachine$.signInWithApple}>
-          <Image
-            source={require('../../assets/apple.png')}
-            style={styles.socialIcon}
-          />
-          <Text style={styles.socialButtonText}>Continue with Apple</Text>
-        </TouchableOpacity>
+        </HighlightOnRender>
+
+        <HighlightOnRender>
+          <Text style={styles.orText}>or</Text>
+        </HighlightOnRender>
+
+        <HighlightOnRender>
+          <TouchableOpacity
+            style={styles.socialButtonLinkedin}
+            onPress={stateMachine$.signInWithLinkedIn}>
+            <Image
+              source={require('../../assets/linkedin.png')}
+              style={styles.socialIconWhite}
+            />
+            <Text style={styles.socialButtonTextWhite}>
+              Continue with LinkedIn
+            </Text>
+          </TouchableOpacity>
+        </HighlightOnRender>
+
+        <HighlightOnRender>
+          <TouchableOpacity
+            style={styles.socialButton}
+            onPress={stateMachine$.signInWithGoogle}>
+            <Image
+              source={require('../../assets/google.png')}
+              style={styles.socialIcon}
+            />
+            <Text style={styles.socialButtonText}>Continue with Google</Text>
+          </TouchableOpacity>
+        </HighlightOnRender>
+
+        <HighlightOnRender>
+          <TouchableOpacity
+            style={styles.socialButton}
+            onPress={stateMachine$.signInWithApple}>
+            <Image
+              source={require('../../assets/apple.png')}
+              style={styles.socialIcon}
+            />
+            <Text style={styles.socialButtonText}>Continue with Apple</Text>
+          </TouchableOpacity>
+        </HighlightOnRender>
       </KeyboardAwareScrollView>
     </View>
   );

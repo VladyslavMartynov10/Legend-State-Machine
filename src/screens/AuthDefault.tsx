@@ -10,7 +10,11 @@ import {
 } from 'react-native';
 import {createStyleSheet, useStyles} from 'react-native-unistyles';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-controller';
-import {ActivityIndicator, AnimatedShadowButton} from '../ui';
+import {
+  ActivityIndicator,
+  AnimatedShadowButton,
+  HighlightOnRender,
+} from '../ui';
 
 export const AuthDefault: React.FC = () => {
   const {styles} = useStyles(stylesheet);
@@ -84,105 +88,129 @@ export const AuthDefault: React.FC = () => {
       <ActivityIndicator isVisible={isLoading} color="black" />
 
       <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.title}>Create Account</Text>
+        <HighlightOnRender>
+          <Text style={styles.title}>Create Account</Text>
+        </HighlightOnRender>
 
-        <TextInput
-          value={firstName}
-          onChangeText={setFirstName}
-          placeholder="First Name"
-          style={styles.input(!!errors.firstName)}
-          placeholderTextColor="#666"
-        />
-        {errors.firstName && (
-          <Text style={styles.errorText}>{errors.firstName}</Text>
-        )}
+        <HighlightOnRender>
+          <TextInput
+            value={firstName}
+            onChangeText={setFirstName}
+            placeholder="First Name"
+            style={styles.input(!!errors.firstName)}
+            placeholderTextColor="#666"
+          />
+          {errors.firstName && (
+            <Text style={styles.errorText}>{errors.firstName}</Text>
+          )}
+        </HighlightOnRender>
 
-        <TextInput
-          value={lastName}
-          onChangeText={setLastName}
-          placeholder="Last Name"
-          style={styles.input(!!errors.lastName)}
-          placeholderTextColor="#666"
-        />
-        {errors.lastName && (
-          <Text style={styles.errorText}>{errors.lastName}</Text>
-        )}
+        <HighlightOnRender>
+          <TextInput
+            value={lastName}
+            onChangeText={setLastName}
+            placeholder="Last Name"
+            style={styles.input(!!errors.lastName)}
+            placeholderTextColor="#666"
+          />
+          {errors.lastName && (
+            <Text style={styles.errorText}>{errors.lastName}</Text>
+          )}
+        </HighlightOnRender>
 
-        <TextInput
-          value={email}
-          onChangeText={setEmail}
-          placeholder="user@gmail.com"
-          style={styles.input(!!errors.email)}
-          placeholderTextColor="#666"
-        />
-        {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
+        <HighlightOnRender>
+          <TextInput
+            value={email}
+            onChangeText={setEmail}
+            placeholder="user@gmail.com"
+            style={styles.input(!!errors.email)}
+            placeholderTextColor="#666"
+          />
+          {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
+        </HighlightOnRender>
 
-        <TextInput
-          value={password}
-          onChangeText={setPassword}
-          placeholder="Enter Your Password"
-          secureTextEntry
-          style={styles.input(!!errors.password)}
-          placeholderTextColor="#666"
-        />
-        {errors.password && (
-          <Text style={styles.errorText}>{errors.password}</Text>
-        )}
+        <HighlightOnRender>
+          <TextInput
+            value={password}
+            onChangeText={setPassword}
+            placeholder="Enter Your Password"
+            secureTextEntry
+            style={styles.input(!!errors.password)}
+            placeholderTextColor="#666"
+          />
+          {errors.password && (
+            <Text style={styles.errorText}>{errors.password}</Text>
+          )}
+        </HighlightOnRender>
 
         <View style={styles.termsContainer}>
-          <Switch
-            value={agreeTerms}
-            onChange={value => setAgreeTerms(value.nativeEvent.value)}
-          />
+          <HighlightOnRender>
+            <Switch
+              value={agreeTerms}
+              onChange={value => setAgreeTerms(value.nativeEvent.value)}
+            />
+          </HighlightOnRender>
 
-          <Text
-            style={styles.termsText}
-            onPress={() => Linking.openURL('https://www.google.com')}>
-            I agree with{' '}
+          <HighlightOnRender>
             <Text
-              style={styles.linkText}
+              style={styles.termsText}
               onPress={() => Linking.openURL('https://www.google.com')}>
-              Terms of Service
-            </Text>{' '}
-            and <Text style={styles.linkText}>{'\n'}Privacy Policy</Text>
-          </Text>
+              I agree with{' '}
+              <Text
+                style={styles.linkText}
+                onPress={() => Linking.openURL('https://www.google.com')}>
+                Terms of Service
+              </Text>{' '}
+              and <Text style={styles.linkText}>{'\n'}Privacy Policy</Text>
+            </Text>
+          </HighlightOnRender>
         </View>
 
-        <AnimatedShadowButton title="Sign Up" onPress={handleSubmit} />
+        <HighlightOnRender>
+          <AnimatedShadowButton title="Sign Up" onPress={handleSubmit} />
+        </HighlightOnRender>
 
-        <Text style={styles.orText}>or</Text>
+        <HighlightOnRender>
+          <Text style={styles.orText}>or</Text>
+        </HighlightOnRender>
 
-        <TouchableOpacity
-          style={styles.socialButton('black')}
-          onPress={signInWithLinkedIn}>
-          <Image
-            source={require('../../assets/linkedin.png')}
-            style={styles.socialIconWhite}
-          />
-          <Text style={styles.socialButtonTextWhite}>
-            Continue with LinkedIn
-          </Text>
-        </TouchableOpacity>
+        <HighlightOnRender>
+          <TouchableOpacity
+            style={styles.socialButton('black')}
+            onPress={signInWithLinkedIn}>
+            <Image
+              source={require('../../assets/linkedin.png')}
+              style={styles.socialIconWhite}
+            />
+            <Text style={styles.socialButtonTextWhite}>
+              Continue with LinkedIn
+            </Text>
+          </TouchableOpacity>
+        </HighlightOnRender>
 
-        <TouchableOpacity
-          style={styles.socialButton('white')}
-          onPress={signInWithGoogle}>
-          <Image
-            source={require('../../assets/google.png')}
-            style={styles.socialIcon}
-          />
-          <Text style={styles.socialButtonText}>Continue with Google</Text>
-        </TouchableOpacity>
+        <HighlightOnRender>
+          <TouchableOpacity
+            style={styles.socialButton('white')}
+            onPress={signInWithGoogle}>
+            <Image
+              source={require('../../assets/google.png')}
+              style={styles.socialIcon}
+            />
+            <Text style={styles.socialButtonText}>Continue with Google</Text>
+          </TouchableOpacity>
+        </HighlightOnRender>
 
-        <TouchableOpacity
-          style={styles.socialButton('white')}
-          onPress={signInWithApple}>
-          <Image
-            source={require('../../assets/apple.png')}
-            style={styles.socialIcon}
-          />
-          <Text style={styles.socialButtonText}>Continue with Apple</Text>
-        </TouchableOpacity>
+        <HighlightOnRender>
+          <TouchableOpacity
+            style={styles.socialButton('white')}
+            onPress={signInWithApple}>
+            <Image
+              source={require('../../assets/apple.png')}
+              style={styles.socialIcon}
+            />
+            <Text style={styles.socialButtonText}>Continue with Apple</Text>
+          </TouchableOpacity>
+        </HighlightOnRender>
       </KeyboardAwareScrollView>
     </View>
   );
