@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  View,
-  Image,
-  Platform,
-} from 'react-native';
+import {Text, TouchableOpacity, StyleSheet, View, Image} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-controller';
 import {
   AnimatedShadowButton,
@@ -19,12 +12,8 @@ import {
   $TextInput as TextInput,
 } from '@legendapp/state/react-native';
 import {Show} from '@legendapp/state/react';
-import {UnistylesRuntime} from 'react-native-unistyles';
 import {stateMachine$} from './state-machine';
 import {useDebugContext} from '../DebugContext';
-
-const PADDING_TOP =
-  Platform.OS === 'ios' ? UnistylesRuntime.insets.top || 16 : 0;
 
 export const StateMachine = () => {
   const {values, errors, isLoading} = stateMachine$;
@@ -189,7 +178,6 @@ export const StateMachine = () => {
 const styles = StyleSheet.create({
   parent: {
     flex: 1,
-    paddingTop: PADDING_TOP,
   },
   container: {
     flexGrow: 1,

@@ -1,5 +1,6 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
+import RNBootSplash from 'react-native-bootsplash';
 import {RouteService} from './RouteService';
 import {Stack} from './models';
 import {
@@ -10,7 +11,9 @@ import {
 
 export const RootNavigator: React.FC = () => {
   return (
-    <NavigationContainer ref={RouteService.navigationRef}>
+    <NavigationContainer
+      ref={RouteService.navigationRef}
+      onReady={() => RNBootSplash.hide({fade: true})}>
       <Stack.Navigator
         screenOptions={{
           headerTitle: 'Implementation List',

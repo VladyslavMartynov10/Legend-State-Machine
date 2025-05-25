@@ -8,7 +8,9 @@
     "lint": "eslint .",
     "start": "react-native start --reset-cache",
     "test": "jest",
-    "android:clean": "cd android && ./gradlew clean && cd ../"
+    "android:clean": "cd android && ./gradlew clean && cd ../",
+    "splash-android": "yarn react-native generate-bootsplash splash.png --platforms=android --logo-width=184 --background=#fff --assets-output=src/assets/bootsplash",
+    "splash-ios": "yarn react-native generate-bootsplash splash.png --platforms=ios --logo-width=264 --background=#fff --assets-output=src/assets/bootsplash"
   },
   "dependencies": {
     "@gorhom/portal": "^1.0.14",
@@ -17,6 +19,7 @@
     "@react-navigation/native-stack": "7.2.0",
     "react": "18.3.1",
     "react-native": "0.75.4",
+    "react-native-bootsplash": "^6.3.8",
     "react-native-keyboard-controller": "1.16.4",
     "react-native-modal": "^14.0.0-rc.1",
     "react-native-reanimated": "3.16.0",

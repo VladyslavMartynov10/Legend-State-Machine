@@ -15,6 +15,8 @@
 		7699B88040F8A987B510C191 /* libPods-StateMachine-StateMachineTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-StateMachine-StateMachineTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8A74278C4477C883971A1720 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = E545384FFCBD416FB40AD0AA /* PrivacyInfo.xcprivacy */; };
+		6AB040ED86ED43BA80ACB35D /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42ADB96BFF0B4CE5912F94C7 /* BootSplash.storyboard */; };
+		F8CF55A1F1F04F0FA8FFDEEB /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7DE9B99B74B64DD090702833 /* Colors.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		89C6BE57DB24E9ADA2F236DE /* Pods-StateMachine-StateMachineTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StateMachine-StateMachineTests.release.xcconfig"; path = "Target Support Files/Pods-StateMachine-StateMachineTests/Pods-StateMachine-StateMachineTests.release.xcconfig"; sourceTree = "<group>"; };
 		E545384FFCBD416FB40AD0AA /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = StateMachine/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		42ADB96BFF0B4CE5912F94C7 /* BootSplash.storyboard */ = {isa = PBXFileReference; name = "BootSplash.storyboard"; path = "StateMachine/BootSplash.storyboard"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7DE9B99B74B64DD090702833 /* Colors.xcassets */ = {isa = PBXFileReference; name = "Colors.xcassets"; path = "StateMachine/Colors.xcassets"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = folder.assetcatalog; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +101,8 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
 				E545384FFCBD416FB40AD0AA /* PrivacyInfo.xcprivacy */,
+				42ADB96BFF0B4CE5912F94C7 /* BootSplash.storyboard */,
+				7DE9B99B74B64DD090702833 /* Colors.xcassets */,
 			);
 			name = StateMachine;
 			sourceTree = "<group>";
@@ -249,6 +255,8 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				8A74278C4477C883971A1720 /* PrivacyInfo.xcprivacy in Resources */,
+				6AB040ED86ED43BA80ACB35D /* BootSplash.storyboard in Resources */,
+				F8CF55A1F1F04F0FA8FFDEEB /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
