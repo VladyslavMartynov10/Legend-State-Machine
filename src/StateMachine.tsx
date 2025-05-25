@@ -3,11 +3,10 @@ import {
   Text,
   Pressable,
   TouchableOpacity,
-  StatusBar,
-  Linking,
   StyleSheet,
   View,
   Image,
+  Platform,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-controller';
 import {AnimatedShadowButton, ActivityIndicator} from './ui';
@@ -16,105 +15,24 @@ import {
   $TextInput as TextInput,
 } from '@legendapp/state/react-native';
 import {Show} from '@legendapp/state/react';
-import {observable} from '@legendapp/state';
+import {UnistylesRuntime} from 'react-native-unistyles';
+import {stateMachine$} from './state-machine';
 
-interface InitialValues {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  agreeTerms: boolean;
-}
+const PADDING_TOP =
+  Platform.OS === 'ios' ? UnistylesRuntime.insets.top || 16 : 0;
 
-interface Form {
-  values: InitialValues;
-  errors: Record<keyof Omit<InitialValues, 'agreeTerms'>, string>;
-  validate: () => boolean;
-  handleSubmit: () => void;
-  didSubmit: boolean;
-  isLoading: boolean;
-  signInWithGoogle: () => Promise<void>;
-  signInWithLinkedIn: () => Promise<void>;
-  signInWithApple: () => Promise<void>;
-}
-
-const form$ = observable<Form>({
-  values: {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    agreeTerms: false,
-  },
-  errors: {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-  },
-  didSubmit: false,
-  isLoading: false,
-  validate() {
-    const newErrors = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-    };
-
-    if (!form$.values.firstName.get().trim()) {
-      newErrors.firstName = 'First name is required';
-    }
-    if (!form$.values.lastName.get().trim()) {
-      newErrors.lastName = 'Last name is required';
-    }
-    if (!form$.values.email.get().includes('@')) {
-      newErrors.email = 'Please enter a valid email';
-    }
-    if (form$.values.password.get().length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
-    }
-
-    form$.errors.set(newErrors);
-    return Object.values(newErrors).some(error => error !== '');
-  },
-  handleSubmit() {
-    form$.didSubmit.set(true);
-    if (!form$.validate()) {
-      console.log('Form submitted:', form$.values.get());
-    }
-  },
-  async signInWithGoogle() {
-    form$.isLoading.set(true);
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    console.log('Signed in with Google');
-    form$.isLoading.set(false);
-  },
-  async signInWithLinkedIn() {
-    form$.isLoading.set(true);
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    console.log('Signed in with LinkedIn');
-    form$.isLoading.set(false);
-  },
-  async signInWithApple() {
-    form$.isLoading.set(true);
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    console.log('Signed in with Apple');
-    form$.isLoading.set(false);
-  },
-});
-
-export const AuthLegend = () => {
-  const {values, errors, isLoading} = form$;
+export const StateMachine = () => {
+  const {values, errors, isLoading} = stateMachine$;
 
   return (
-    <>
-      <StatusBar barStyle="light-content" backgroundColor="white" />
-
-      <Show if={isLoading}>{() => <ActivityIndicator isVisible={true} />}</Show>
+    <View style={styles.parent}>
+      <Show if={isLoading}>
+        {() => <ActivityIndicator isVisible={true} color="black" />}
+      </Show>
 
       <KeyboardAwareScrollView contentContainerStyle={styles.container}>
         <Text style={styles.title}>Create Account</Text>
+
         <Pressable>
           <Text style={styles.loginText}>Log In</Text>
         </Pressable>
@@ -127,6 +45,7 @@ export const AuthLegend = () => {
           }
           placeholderTextColor="#666"
         />
+
         <Show if={errors.firstName}>
           {() => <Text style={styles.errorText}>{errors.firstName.get()}</Text>}
         </Show>
@@ -139,6 +58,7 @@ export const AuthLegend = () => {
           }
           placeholderTextColor="#666"
         />
+
         <Show if={errors.lastName}>
           {() => <Text style={styles.errorText}>{errors.lastName.get()}</Text>}
         </Show>
@@ -149,10 +69,10 @@ export const AuthLegend = () => {
           $style={() => (errors.email.get() ? styles.inputError : styles.input)}
           placeholderTextColor="#666"
         />
+
         <Show if={errors.email}>
           {() => <Text style={styles.errorText}>{errors.email.get()}</Text>}
         </Show>
-
         <TextInput
           $value={values.password}
           placeholder="Enter Your Password"
@@ -165,61 +85,60 @@ export const AuthLegend = () => {
         <Show if={errors.password}>
           {() => <Text style={styles.errorText}>{errors.password.get()}</Text>}
         </Show>
-
         <View style={styles.termsContainer}>
           <Switch $value={values.agreeTerms} />
           <Text style={styles.termsText}>
             I agree with{' '}
-            <Text
-              style={styles.linkText}
-              onPress={() => Linking.openURL('https://www.google.com')}>
+            <Text style={styles.linkText} onPress={stateMachine$.openPrivacy}>
               Terms of Service
             </Text>{' '}
-            and <Text style={styles.linkText}>Privacy Policy</Text>
+            and <Text style={styles.linkText}>{'\n'}Privacy Policy</Text>
           </Text>
         </View>
-
-        <AnimatedShadowButton title="Sign Up" onPress={form$.handleSubmit} />
-
+        <AnimatedShadowButton
+          title="Sign Up"
+          onPress={() => stateMachine$.send({type: 'SUBMIT'})}
+        />
         <Text style={styles.orText}>or</Text>
-
         <TouchableOpacity
           style={styles.socialButtonLinkedin}
-          onPress={form$.signInWithLinkedIn}>
+          onPress={stateMachine$.signInWithLinkedIn}>
           <Image
-            source={require('./assets/linkedin.png')}
+            source={require('../assets/linkedin.png')}
             style={styles.socialIconWhite}
           />
           <Text style={styles.socialButtonTextWhite}>
             Continue with LinkedIn
           </Text>
         </TouchableOpacity>
-
         <TouchableOpacity
           style={styles.socialButton}
-          onPress={form$.signInWithGoogle}>
+          onPress={stateMachine$.signInWithGoogle}>
           <Image
-            source={require('./assets/google.png')}
+            source={require('../assets/google.png')}
             style={styles.socialIcon}
           />
           <Text style={styles.socialButtonText}>Continue with Google</Text>
         </TouchableOpacity>
-
         <TouchableOpacity
           style={styles.socialButton}
-          onPress={form$.signInWithApple}>
+          onPress={stateMachine$.signInWithApple}>
           <Image
-            source={require('./assets/apple.png')}
+            source={require('../assets/apple.png')}
             style={styles.socialIcon}
           />
           <Text style={styles.socialButtonText}>Continue with Apple</Text>
         </TouchableOpacity>
       </KeyboardAwareScrollView>
-    </>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  parent: {
+    flex: 1,
+    paddingTop: PADDING_TOP,
+  },
   container: {
     flexGrow: 1,
     padding: 16,
@@ -229,6 +148,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: 'black',
   },
   loginText: {
     color: '#007BFF',
@@ -272,6 +192,7 @@ const styles = StyleSheet.create({
   termsText: {
     fontSize: 14,
     color: '#333',
+    marginLeft: 8,
   },
   linkText: {
     color: '#007BFF',

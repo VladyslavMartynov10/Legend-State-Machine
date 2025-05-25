@@ -1,16 +1,15 @@
 import React, {useState} from 'react';
-import {AuthLegend} from './AuthLegend';
-import {AuthDefault} from './AuthDefault';
+import {AuthDefault, StateMachine} from './src';
 import {KeyboardProvider} from 'react-native-keyboard-controller';
-import {StateMachine} from './StateMachine';
+import {StatusBar} from 'react-native';
 
 function App(): React.JSX.Element {
   const [index] = useState(2);
 
   return (
     <KeyboardProvider>
+      <StatusBar translucent barStyle="light-content" />
       {index === 0 && <AuthDefault />}
-      {index === 1 && <AuthLegend />}
       {index === 2 && <StateMachine />}
     </KeyboardProvider>
   );
