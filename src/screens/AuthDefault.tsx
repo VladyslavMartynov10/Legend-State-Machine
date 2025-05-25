@@ -4,14 +4,13 @@ import {
   Text,
   View,
   Image,
-  Pressable,
   TouchableOpacity,
   Linking,
   Switch,
 } from 'react-native';
 import {createStyleSheet, useStyles} from 'react-native-unistyles';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-controller';
-import {ActivityIndicator, AnimatedShadowButton} from './ui';
+import {ActivityIndicator, AnimatedShadowButton} from '../ui';
 
 export const AuthDefault: React.FC = () => {
   const {styles} = useStyles(stylesheet);
@@ -86,9 +85,6 @@ export const AuthDefault: React.FC = () => {
 
       <KeyboardAwareScrollView contentContainerStyle={styles.container}>
         <Text style={styles.title}>Create Account</Text>
-        <Pressable>
-          <Text style={styles.loginText}>Log In</Text>
-        </Pressable>
 
         <TextInput
           value={firstName}
@@ -160,7 +156,7 @@ export const AuthDefault: React.FC = () => {
           style={styles.socialButton('black')}
           onPress={signInWithLinkedIn}>
           <Image
-            source={require('../assets/linkedin.png')}
+            source={require('../../assets/linkedin.png')}
             style={styles.socialIconWhite}
           />
           <Text style={styles.socialButtonTextWhite}>
@@ -172,7 +168,7 @@ export const AuthDefault: React.FC = () => {
           style={styles.socialButton('white')}
           onPress={signInWithGoogle}>
           <Image
-            source={require('../assets/google.png')}
+            source={require('../../assets/google.png')}
             style={styles.socialIcon}
           />
           <Text style={styles.socialButtonText}>Continue with Google</Text>
@@ -182,7 +178,7 @@ export const AuthDefault: React.FC = () => {
           style={styles.socialButton('white')}
           onPress={signInWithApple}>
           <Image
-            source={require('../assets/apple.png')}
+            source={require('../../assets/apple.png')}
             style={styles.socialIcon}
           />
           <Text style={styles.socialButtonText}>Continue with Apple</Text>

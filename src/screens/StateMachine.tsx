@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Text,
-  Pressable,
   TouchableOpacity,
   StyleSheet,
   View,
@@ -9,7 +8,7 @@ import {
   Platform,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-controller';
-import {AnimatedShadowButton, ActivityIndicator} from './ui';
+import {AnimatedShadowButton, ActivityIndicator} from '../ui';
 import {
   $Switch as Switch,
   $TextInput as TextInput,
@@ -32,10 +31,6 @@ export const StateMachine = () => {
 
       <KeyboardAwareScrollView contentContainerStyle={styles.container}>
         <Text style={styles.title}>Create Account</Text>
-
-        <Pressable>
-          <Text style={styles.loginText}>Log In</Text>
-        </Pressable>
 
         <TextInput
           $value={values.firstName}
@@ -104,7 +99,7 @@ export const StateMachine = () => {
           style={styles.socialButtonLinkedin}
           onPress={stateMachine$.signInWithLinkedIn}>
           <Image
-            source={require('../assets/linkedin.png')}
+            source={require('../../assets/linkedin.png')}
             style={styles.socialIconWhite}
           />
           <Text style={styles.socialButtonTextWhite}>
@@ -115,7 +110,7 @@ export const StateMachine = () => {
           style={styles.socialButton}
           onPress={stateMachine$.signInWithGoogle}>
           <Image
-            source={require('../assets/google.png')}
+            source={require('../../assets/google.png')}
             style={styles.socialIcon}
           />
           <Text style={styles.socialButtonText}>Continue with Google</Text>
@@ -124,7 +119,7 @@ export const StateMachine = () => {
           style={styles.socialButton}
           onPress={stateMachine$.signInWithApple}>
           <Image
-            source={require('../assets/apple.png')}
+            source={require('../../assets/apple.png')}
             style={styles.socialIcon}
           />
           <Text style={styles.socialButtonText}>Continue with Apple</Text>
