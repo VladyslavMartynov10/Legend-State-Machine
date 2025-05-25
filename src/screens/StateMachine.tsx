@@ -12,6 +12,7 @@ import {
   AnimatedShadowButton,
   ActivityIndicator,
   HighlightOnRender,
+  Counter,
 } from '../ui';
 import {
   $Switch as Switch,
@@ -20,6 +21,7 @@ import {
 import {Show} from '@legendapp/state/react';
 import {UnistylesRuntime} from 'react-native-unistyles';
 import {stateMachine$} from './state-machine';
+import {useDebugContext} from '../DebugContext';
 
 const PADDING_TOP =
   Platform.OS === 'ios' ? UnistylesRuntime.insets.top || 16 : 0;
@@ -27,11 +29,13 @@ const PADDING_TOP =
 export const StateMachine = () => {
   const {values, errors, isLoading} = stateMachine$;
 
+  const {debugRenderHighlight} = useDebugContext();
+
   return (
     <View style={styles.parent}>
-      <Show if={isLoading}>
-        {() => <ActivityIndicator isVisible={true} color="black" />}
-      </Show>
+      {debugRenderHighlight && <Counter />}
+
+      <Show if={isLoading}>{() => <ActivityIndicator isVisible={true} />}</Show>
 
       <KeyboardAwareScrollView contentContainerStyle={styles.container}>
         <HighlightOnRender>

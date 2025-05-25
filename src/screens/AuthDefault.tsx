@@ -14,9 +14,13 @@ import {
   ActivityIndicator,
   AnimatedShadowButton,
   HighlightOnRender,
+  Counter,
 } from '../ui';
+import {useDebugContext} from '../DebugContext';
 
 export const AuthDefault: React.FC = () => {
+  const {debugRenderHighlight} = useDebugContext();
+
   const {styles} = useStyles(stylesheet);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -85,7 +89,9 @@ export const AuthDefault: React.FC = () => {
 
   return (
     <View style={styles.parent}>
-      <ActivityIndicator isVisible={isLoading} color="black" />
+      {debugRenderHighlight && <Counter />}
+
+      <ActivityIndicator isVisible={isLoading} />
 
       <KeyboardAwareScrollView contentContainerStyle={styles.container}>
         <HighlightOnRender>
