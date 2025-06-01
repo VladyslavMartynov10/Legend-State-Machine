@@ -17,11 +17,15 @@ const screens = [
   {label: 'Legend State Machine', route: Routes.LEGEND_STATE_MACHINE},
 ] as const;
 
+export const IsNewArchitecture = global?.nativeFabricUIManager != null;
+
 export const ImplementationList: React.FC = () => {
   const {debugRenderHighlight, toggleDebug} = useDebugContext();
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Text style={{color : 'black'}}>React Native Architecture: {IsNewArchitecture ? 'NEW' : 'OLD'}</Text>
+
       {screens.map(({label, route}) => (
         <TouchableOpacity
           key={route}

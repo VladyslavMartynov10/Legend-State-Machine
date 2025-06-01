@@ -1,0 +1,30 @@
+default_platform(:android)
+
+
+ANDROID_ENVIRONMENT = ENV['ANDROID_ENVIRONMENT']
+ANDROID_KEYSTORE_PASSWORD = ENV['ANDROID_KEYSTORE_PASSWORD']
+ANDROID_KEYSTORE_ALIAS = ENV['ANDROID_KEYSTORE_ALIAS']
+ANDROID_KEY_PASSWORD = ENV['ANDROID_KEY_PASSWORD']
+ANDROID_VERSION_NAME = ENV['ANDROID_VERSION_NAME']
+
+
+platform :android do
+  desc 'Submit a new build to play store'
+  lane :deploy_to_play_store do |options|
+    keystore_path = File.absolute_path('../app/statemachine.keystore')
+
+    # release .apk
+    gradle(
+        task: 'assemble',
+        build_type: 'Release',
+        project_dir: '../android',
+        properties: {
+            "android.injected.signing.store.file" => keystore_path,
+            "android.injected.signing.store.password" => ANDROID_KEYSTORE_PASSWORD,
+            "android.injected.signing.key.alias" => ANDROID_KEYSTORE_ALIAS,
+            "android.injected.signing.key.password" => ANDROID_KEY_PASSWORD,
+        },
+        flags: "--stacktrace"
+    )
+  end
+end
